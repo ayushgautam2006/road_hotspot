@@ -20,7 +20,17 @@ MODELS_OUTPUT_DIR: Path = PROJECT_ROOT / "outputs" / "models"
 # ── Reproducibility ──────────────────────────────────────────────────────────
 RANDOM_SEED: int = 42
 
+# ── Standard schema ──────────────────────────────────────────────────────────
+STANDARD_COLUMNS: List[str] = [
+    "accident_id", "date", "time", "latitude", "longitude", "severity",
+    "num_vehicles", "num_casualties", "road_type", "speed_limit",
+    "light_conditions", "weather", "road_surface", "junction_type",
+    "urban_rural",
+]
+"""Canonical column order for every DataFrame that enters the pipeline."""
+
 # ── Column-name constants ────────────────────────────────────────────────────
+COL_ACCIDENT_ID: str = "accident_id"
 COL_LATITUDE: str = "latitude"
 COL_LONGITUDE: str = "longitude"
 COL_SEVERITY: str = "severity"
@@ -30,11 +40,58 @@ COL_ROAD_TYPE: str = "road_type"
 COL_WEATHER: str = "weather"
 COL_LIGHT_CONDITIONS: str = "light_conditions"
 COL_ROAD_SURFACE: str = "road_surface"
-COL_CASUALTIES: str = "number_of_casualties"
-COL_VEHICLES: str = "number_of_vehicles"
+COL_CASUALTIES: str = "num_casualties"
+COL_VEHICLES: str = "num_vehicles"
 COL_SPEED_LIMIT: str = "speed_limit"
+COL_JUNCTION_TYPE: str = "junction_type"
+COL_URBAN_RURAL: str = "urban_rural"
 COL_CLUSTER_LABEL: str = "cluster_label"
 COL_PRIORITY_SCORE: str = "priority_score"
+
+# ── Severity code mapping ────────────────────────────────────────────────────
+SEVERITY_CODES: Dict[int, str] = {1: "fatal", 2: "serious", 3: "slight"}
+"""Integer severity code → human-readable label."""
+
+# ── Canonical category values (used by synthetic generator) ──────────────────
+ROAD_TYPES: List[str] = [
+    "single_carriageway", "dual_carriageway", "roundabout",
+    "one_way", "slip_road", "unknown",
+]
+LIGHT_CONDITIONS_VALUES: List[str] = [
+    "daylight", "dark_lit", "dark_unlit", "dawn_dusk",
+]
+WEATHER_VALUES: List[str] = [
+    "fine", "rain", "fog", "snow", "high_wind", "other",
+]
+ROAD_SURFACE_VALUES: List[str] = [
+    "dry", "wet", "ice", "snow", "flood",
+]
+JUNCTION_TYPES: List[str] = [
+    "not_junction", "crossroads", "t_junction", "roundabout",
+    "slip_road", "other",
+]
+URBAN_RURAL_VALUES: List[str] = ["urban", "rural"]
+SPEED_LIMITS: List[int] = [20, 30, 40, 50, 60, 70]
+
+# ── Default column mapping for real data (UK STATS19 example) ────────────────
+DEFAULT_COLUMN_MAPPING: Dict[str, str] = {
+    "Accident_Index": "accident_id",
+    "Date": "date",
+    "Time": "time",
+    "Latitude": "latitude",
+    "Longitude": "longitude",
+    "Accident_Severity": "severity",
+    "Number_of_Vehicles": "num_vehicles",
+    "Number_of_Casualties": "num_casualties",
+    "Road_Type": "road_type",
+    "Speed_limit": "speed_limit",
+    "Light_Conditions": "light_conditions",
+    "Weather_Conditions": "weather",
+    "Road_Surface_Conditions": "road_surface",
+    "Junction_Detail": "junction_type",
+    "Urban_or_Rural_Area": "urban_rural",
+}
+"""Source column → standard column for UK STATS19 CSVs."""
 
 # ── Clustering hyper-parameters ──────────────────────────────────────────────
 CLUSTER_RADIUS_KM: float = 0.5
@@ -96,3 +153,11 @@ MAP_DEFAULT_LOCATION: List[float] = [51.5074, -0.1278]
 
 MAP_DEFAULT_ZOOM: int = 11
 """Default zoom level for Folium maps."""
+
+# ── Synthetic-data file paths ─────────────────────────────────────────────────
+RAW_ACCIDENTS_CSV: Path = RAW_DATA_DIR / "accidents_raw.csv"
+TRUE_HOTSPOTS_CSV: Path = RAW_DATA_DIR / "true_hotspots.csv"
+
+# ── Geographic bounds for the fictional city (greater London area) ───────────
+CITY_LAT_RANGE: List[float] = [51.35, 51.65]
+CITY_LON_RANGE: List[float] = [-0.35, 0.15]
