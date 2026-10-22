@@ -157,6 +157,7 @@ MAP_DEFAULT_ZOOM: int = 11
 # ── Synthetic-data file paths ─────────────────────────────────────────────────
 RAW_ACCIDENTS_CSV: Path = RAW_DATA_DIR / "accidents_raw.csv"
 TRUE_HOTSPOTS_CSV: Path = RAW_DATA_DIR / "true_hotspots.csv"
+CLEAN_ACCIDENTS_CSV: Path = PROCESSED_DATA_DIR / "accidents_clean.csv"
 
 # ── Geographic bounds for the fictional city (greater London area) ───────────
 CITY_LAT_RANGE: List[float] = [51.35, 51.65]
