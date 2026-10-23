@@ -95,17 +95,23 @@ DEFAULT_COLUMN_MAPPING: Dict[str, str] = {
 
 # ── Clustering hyper-parameters ──────────────────────────────────────────────
 CLUSTER_RADIUS_KM: float = 0.5
-"""Maximum geographic radius (km) used to define neighbourhood in HDBSCAN."""
+"""Maximum geographic radius (km) used to define neighbourhood in clustering."""
 
-MIN_CLUSTER_SIZE: int = 5
+MIN_CLUSTER_SIZE: int = 25
 """Minimum number of accidents to form a cluster."""
 
-MIN_SAMPLES: int = 3
-"""HDBSCAN min_samples parameter – controls cluster density."""
+MIN_SAMPLES: int = 10
+"""Minimum samples parameter – controls cluster density."""
+
+EARTH_RADIUS_KM: float = 6371.0088
+"""Mean Earth radius in kilometres used for haversine conversions."""
+
+HOTSPOT_VALIDATION_RADIUS_KM: float = 1.0
+"""Maximum distance threshold (km) to consider a true hotspot recovered."""
 
 # ── Severity weights ─────────────────────────────────────────────────────────
 SEVERITY_WEIGHTS: Dict[str, float] = {
-    "fatal": 5.0,
+    "fatal": 10.0,
     "serious": 3.0,
     "slight": 1.0,
 }
@@ -158,6 +164,10 @@ MAP_DEFAULT_ZOOM: int = 11
 RAW_ACCIDENTS_CSV: Path = RAW_DATA_DIR / "accidents_raw.csv"
 TRUE_HOTSPOTS_CSV: Path = RAW_DATA_DIR / "true_hotspots.csv"
 CLEAN_ACCIDENTS_CSV: Path = PROCESSED_DATA_DIR / "accidents_clean.csv"
+HOTSPOTS_CSV: Path = PROCESSED_DATA_DIR / "hotspots.csv"
+KDE_GRID_CSV: Path = PROCESSED_DATA_DIR / "kde_grid.csv"
+HOTSPOT_SWEEP_CSV: Path = MODELS_OUTPUT_DIR / "hotspot_param_sweep.csv"
+HOTSPOT_SWEEP_PLOT: Path = FIGURES_OUTPUT_DIR / "hotspot_param_sweep.png"
 
 # ── Geographic bounds for the fictional city (greater London area) ───────────
 CITY_LAT_RANGE: List[float] = [51.35, 51.65]

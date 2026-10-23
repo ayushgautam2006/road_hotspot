@@ -1,0 +1,6 @@
+setting_id,min_cluster_size,cluster_radius_km,min_samples,num_clusters,noise_count,noise_fraction,silhouette_score
+1,15,0.3,7,47,1762,0.1762,0.6136
+2,20,0.4,10,35,2052,0.2052,0.6592
+3,25,0.5,12,28,2159,0.2159,0.6731
+4,35,0.5,17,19,2594,0.2594,0.6939
+5,50,0.75,25,14,2769,0.2769,0.6933
