@@ -191,7 +191,7 @@ def _print_report(report: Dict[str, Any]) -> None:
         print("  Categoricals imputed:")
         for col, n in report["categoricals_imputed"].items():
             print(f"    {col:25s}  {n:>6,}")
-    print("  " + "─" * 40)
+    print("  " + "-" * 40)
     print(f"  Total rows removed:        {report['rows_removed_total']:>8,}")
     print(f"  Final rows:                {report['final_rows']:>8,}")
     print("=" * 60)
@@ -256,6 +256,12 @@ def clean_accidents(
     # Step 6 ── impute missing categoricals
     df, imputed = impute_missing_categoricals(df)
     report["categoricals_imputed"] = imputed
+
+    # Step 7 ── second dedup pass (standardisation can create new dupes)
+    df, n2 = remove_duplicates(df)
+    report["duplicates_removed"] += n2
+    if n2:
+        logger.info("Removed %d additional duplicates after standardisation", n2)
 
     # Summary
     report["final_rows"] = len(df)
